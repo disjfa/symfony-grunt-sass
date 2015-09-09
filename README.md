@@ -1,72 +1,68 @@
-Symfony Standard Edition
-========================
+Symfony Grunt Sass Edition
+=====================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+This is a Symfony Edition that replaces Assetic with a grunt configuration.  I have some taken some
+liberties based on my development style.  When doing frontend development, I added a watch task to
+the grunt configuration becouse i like watch tasks, i like my updates to be instant.  This edition
+allows for your frontend assets to be linked to the source in development and linked to the minified
+version in production.
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
+## Requirements
 
-What's inside?
---------------
+- npm
+- bower (`sudo npm install -g bower`)
+- grunt (`sudo npm install -g grunt-cli`)
 
-The Symfony Standard Edition is configured with the following defaults:
+## Installation
 
-  * An AppBundle you can use to start coding;
+```
+> composer install
+> bower install
+> npm install
+> grunt
+> grunt prod (when deploying)
+```
 
-  * Twig as the only configured template engine;
+## Grunt Tasks
 
-  * Doctrine ORM/DBAL;
+- `clean`: removes `web/_static` contents
+- `jshint`: detect errors in your javascipt
+- `concat`: compile javascript in one file
+- `uglify`: minify your javascipt
+- `cssmin`: minify your css
+- `modernizr`: install/configure modernizr based on your javascript files\
+- `watch`: watches filechanges and runs development compile
+- *(default)*: runs all development tasks
+- *(prod)*: runs all the above
 
-  * Swiftmailer;
+## Configuration
 
-  * Annotations enabled for everything.
+To configure the assets for you project, add them to `app/config/assets.json`.  Both Symfony2 and grunt use
+this configuration.
 
-It comes pre-configured with the following bundles:
+## Summary of changes from the Symfony Standard Edition
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+### New Files
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+- `bower.json`: bower package configuration
+- `.bowerrc`: bower configuration to install frontend assets to `web/vendor`
+- `package.json`: npm package configuration (for grunt)
+- `app/config/assets.json`: global asset configuration
+- `app/config/config.php`: sets a Symfony2 parameter based on the above `assets.json` configuration
+- `gruntfile.js`: configures grunt, assets for minification are pulled from the above `assets.json`
+- `app/Resources/scss/*`: sass files
+- `app/Resources/js/*`: javascript files for your project
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+### Modified Files
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+- `app/config/config.yml`: added twig global variable `app_assets` which is set to the parameter set in `config.php`
+- `app/Resources/views/base.html.twig`: modified the `stylesheets` and `javascripts` block to load these assets
+ based on the above `app_assets` configuration (`app.debug=true`: source is used, `app.debug=false`: min is used)
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+### Other Changes
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+- Removed Assetic
+- Simplifed AppBundle
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
-
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  https://symfony.com/doc/2.7/book/installation.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/2.7/book/doctrine.html
-[8]:  https://symfony.com/doc/2.7/book/templating.html
-[9]:  https://symfony.com/doc/2.7/book/security.html
-[10]: https://symfony.com/doc/2.7/cookbook/email.html
-[11]: https://symfony.com/doc/2.7/cookbook/logging/monolog.html
-[12]: https://symfony.com/doc/2.7/cookbook/assetic/asset_management.html
-[13]: https://symfony.com/doc/2.7/bundles/SensioGeneratorBundle/index.html
+### Info
+Based on [https://github.com/kbond/symfony-grunt-edition]

@@ -1,3 +1,3 @@
-/**
- * Created by disjfa i5 on 9-9-2015.
- */
+(function() {
+    console.log("Hello world");
+})();

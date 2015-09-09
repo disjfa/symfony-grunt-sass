@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        {% set css_assets = app.debug ? app_assets.scss.destination : app_assets.css.destination %}
+        <link rel="stylesheet" href="{{ asset(css_assets) }}"/>
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <script src="{{ asset('_static/js/modernizr.js') }}"></script>
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}
+    {% set js_assets = app.debug ? app_assets.concat.destination : app_assets.uglify.destination %}
+    <script src="{{ asset(js_assets) }}"></script>
+{% endblock %}
+</body>
 </html>

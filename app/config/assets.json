@@ -17,12 +17,18 @@
     ],
     "destination": "fonts/"
   },
-  "js": {
+  "concat": {
     "source": [
       "vendor/jquery/dist/jquery.js",
       "vendor/bootstrap/dist/js/bootstrap.js",
-      "js/script.js"
+      "../app/Resources/js/app.js"
     ],
-    "destination": "_dev/js/script.min.js"
+    "destination": "_dev/js/script.js"
+  },
+  "uglify": {
+    "source": [
+      "_dev/js/script.js"
+    ],
+    "destination": "_static/js/script.min.js"
   }
 }
