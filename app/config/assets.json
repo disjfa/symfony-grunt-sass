@@ -1,0 +1,28 @@
+{
+  "scss": {
+    "source": [
+      "../app/Resources/scss/source.scss"
+    ],
+    "destination": "_dev/css/style.css"
+  },
+  "css": {
+    "source": [
+      "_dev/css/style.css"
+    ],
+    "destination": "_static/css/style.min.css"
+  },
+  "copy": {
+    "source": [
+      "../web/vendor/font-awesome/fonts/*"
+    ],
+    "destination": "fonts/"
+  },
+  "js": {
+    "source": [
+      "vendor/jquery/dist/jquery.js",
+      "vendor/bootstrap/dist/js/bootstrap.js",
+      "js/script.js"
+    ],
+    "destination": "_dev/js/script.min.js"
+  }
+}

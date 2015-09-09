@@ -1,0 +1,25 @@
+$fa-font-path: '../../fonts';
+
+$body-bg: #666;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 34em,
+  md: 48em,
+  lg: 62em,
+  xl: 75em,
+  xxl: 97em
+) ;
+
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+$container-max-widths: (
+    sm: 34rem, // 480
+    md: 45rem, // 720
+    lg: 60rem, // 960
+    xl: 72.25rem, // 1140
+    xxl: 95rem // >
+) ;
+
