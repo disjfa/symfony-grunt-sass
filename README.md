@@ -59,6 +59,12 @@ this configuration.
 - `app/Resources/views/base.html.twig`: modified the `stylesheets` and `javascripts` block to load these assets
  based on the above `app_assets` configuration (`app.debug=true`: source is used, `app.debug=false`: min is used)
 
+### Bower files and info
+
+I added a default setup for bootstrap and fontawesome for example usage. The source.scss has a link to these files. 
+In a grunt task i use a copy command to copy the fonts to the web/fonts directory. These are just used for example 
+usage, if you want to use some other library you can just change them and create something awesome.
+
 ### Other Changes
 
 - Removed Assetic
