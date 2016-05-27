@@ -1,7 +1,7 @@
 Symfony Grunt Sass Edition
 =====================
 
-This is a Symfony Edition that replaces uses grunt configuration for styles and javascripts.  I built 
+This is a Symfony Edition that uses a grunt configuration for styles and javascripts.  I built 
 a way where i can create and edit my styles and javascripts and symfony does not need to worry about a 
 configuration. You can build check and create a complete javascript file using es6. Watch your files
 being created on the fly and test your application. And when you are done create the minified files
