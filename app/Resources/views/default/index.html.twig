@@ -1,41 +1,67 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <div class="jumbotron">
-            <div class="text-center text-success">
-                <i class="fa fa-fw fa-5x fa-check"></i>
-            </div>
-            <h1>
-                Welcome to
-                <span class="text-muted"> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</span>
-            </h1>
 
-            <div class="lead">
-                Your application is ready to start working on it at:
+    <div class="demo-header">
+        <div class="container">
+            <div class="text-xs-center">
+                <i class="fa fa-user fa-5x"></i>
+                <h1><span>Welcome to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }} the grunt edition</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <br><br>
+        <div class="card">
+            <div class="card-header">
+                <i class="fa fa-check"></i>
+                Your application is now ready. You can start working on it at:
+            </div>
+            <div class="card-block">
                 <code>{{ base_dir }}/</code>
             </div>
-            <hr>
-            <div id="next">
-                <h2>What's next?</h2>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-xs-12 text-md-center">
+                <h2><i class="fa fa-book"></i>What's next?</h2>
+                <p class="lead">
 
-                <div class="media">
-                    <div class="media-left">
-                        <i class="fa fa-fw fa-5x fa-book"></i>
+                    Read the documentation to learn
+                    <a href="http://symfony.com/doc/{{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION')[:3] }}/book/page_creation.html">
+                        How to create your first page in Symfony
+                    </a>
+                </p>
+            </div>
+        </div>
+        <br><br>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+            Launch demo modal
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                     </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">
-                            Read Symfony documentation to learn
-                        </h4>
-
+                    <div class="modal-body">
                         <p>
-                            <a href="http://symfony.com/doc/{{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION')[:3] }}/book/page_creation.html">
-                                How to create your first page in Symfony
-                            </a>
+                            This is just a demo to check if the javascript is loading.
                         </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 {% endblock %}

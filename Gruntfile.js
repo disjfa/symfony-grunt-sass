@@ -1,83 +1,87 @@
 module.exports = function (grunt) {
-    // read in assets from configuration
-    var assets = grunt.file.readJSON('app/config/assets.json');
-
-    // prefix assets with 'web/'
-    var loadAssets = function (config) {
-        var ret = {};
-        var dest = 'web/' + config.destination;
-        var files = [];
-
-        config.source.forEach(function (val) {
-            files.push('web/' + val);
-        });
-
-        ret[dest] = files;
-
-        return ret;
-    };
-
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
         modernizr: {
             dist: {
+                cache: true,
                 devFile: "remote",
-                outputFile: "web/_static/js/modernizr.js",
+                dest: "web/demo/js/modernizr.js",
                 files: {
-                    "src": ["../app/Resource/js/*", "web/_dev/css/*"]
+                    "src": ["web/demo/js/*", "web/demo/css/*"]
                 }
             }
         },
         copy: {
-            options: {
-
-            },
+            options: {},
             build: {
                 expand: true,
                 flatten: true,
                 filter: 'isFile',
-                src: 'web/vendor/font-awesome/fonts/*',
-                dest: 'web/fonts'
+                src: 'node_modules/font-awesome/fonts/*',
+                dest: 'web/demo/fonts'
             }
         },
         jshint: {
             options: {
-                reporter: require('jshint-stylish')
+                reporter: require('jshint-stylish'),
+                esversion: 6
             },
             all: [
                 'Gruntfile.js',
-                'web/js/*'
+                'web/demo/scripts/**/*.js'
             ]
         },
-
-        concat: {
-            options: {
-                report: 'min',
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-            },
-            build: {
-                files: loadAssets(assets.concat)
+        browserify: {
+            dist: {
+                options: {
+                    transform: [
+                        [
+                            'babelify',
+                            {
+                                presets: ['es2015']
+                            }
+                        ]
+                    ],
+                    browserifyOptions: {
+                        debug: true
+                    },
+                    exclude: ''
+                },
+                files: {
+                    'web/demo/js/demo.js': ['web/demo/scripts/demo.js']
+                }
             }
         },
-
         uglify: {
             options: {
                 report: 'min',
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             build: {
-                files: loadAssets(assets.uglify)
+                files: {
+                    'web/demo/js/demo.min.js': ['web/demo/js/demo.js']
+                }
             }
         },
-
+        sasslint: {
+            options: {
+                configFile: '.sass-lint.yml'
+            },
+            target: [
+                'web/demo/sass/app.scss',
+                'web/demo/sass/**/*.scss'
+            ]
+        },
         sass: {
             dist: {
                 options: {
-                    style: 'expanded'
+                    style: 'expanded',
+                    loadPath: 'node_modules'
                 },
-                files: loadAssets(assets.scss)
-
+                files: {
+                    'web/demo/css/demo.css': 'web/demo/sass/demo.scss'
+                }
             }
         },
 
@@ -89,16 +93,29 @@ module.exports = function (grunt) {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             build: {
-                files: loadAssets(assets.css)
+                files: {
+                    'web/demo/css/demo.min.css': 'web/demo/css/demo.css'
+                }
             }
         },
 
-        clean: ['web/_static/*'],
+        clean: [
+            'web/demo/css/*',
+            'web/demo/fonts/*',
+            'web/demo/js/*'
+        ],
 
         watch: {
             sass: {
-                files: 'app/Resources/**/*.scss',
-                tasks: ['sass'],
+                files: 'web/demo/**/*.scss',
+                tasks: ['sasslint', 'sass'],
+                options: {
+                    debounceDelay: 250
+                }
+            },
+            scripts: {
+                files: 'web/demo/scripts/**/*.js',
+                tasks: ['jshint', 'browserify'],
                 options: {
                     debounceDelay: 250
                 }
@@ -114,8 +131,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-sass-lint');
 
-    grunt.registerTask('default', ['clean', 'copy', 'jshint', 'concat', 'sass', 'modernizr', 'watch']);
-    grunt.registerTask('prod', ['clean', 'copy', 'jshint', 'concat', 'uglify', 'sass', 'cssmin', 'modernizr']);
+    grunt.registerTask('default', ['clean', 'copy', 'jshint', 'browserify', 'sasslint', 'sass', 'modernizr']);
+    grunt.registerTask('watcher', ['default', 'watch']);
+    grunt.registerTask('prod', ['clean', 'copy', 'jshint', 'browserify', 'uglify', 'sasslint', 'sass', 'cssmin', 'modernizr']);
 };

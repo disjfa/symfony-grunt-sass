@@ -2,21 +2,27 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
+
     <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}
-        {% set css_assets = app.debug ? app_assets.scss.destination : app_assets.css.destination %}
-        <link rel="stylesheet" href="{{ asset(css_assets) }}"/>
-    {% endblock %}
+    {% if app.environment == 'dev' %}
+        <link rel="stylesheet" href="{{ asset('demo/css/demo.css') }}">
+    {% else %}
+        <link rel="stylesheet" href="{{ asset('demo/css/demo.min.css') }}">
+    {% endif %}
+
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
-    <script src="{{ asset('_static/js/modernizr.js') }}"></script>
 </head>
 <body>
 {% block body %}{% endblock %}
-{% block javascripts %}
-    {% set js_assets = app.debug ? app_assets.concat.destination : app_assets.uglify.destination %}
-    <script src="{{ asset(js_assets) }}"></script>
-{% endblock %}
+
+{% if app.environment == 'dev' %}
+    <script src="{{ asset('demo/js/demo.js') }}"></script>
+{% else %}
+    <script src="{{ asset('demo/js/demo.min.js') }}"></script>
+{% endif %}
+<script src="{{ asset('demo/js/modernizr.js') }}"></script>
+{% block javascripts %}{% endblock %}
 </body>
 </html>
