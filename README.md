@@ -1,6 +1,10 @@
 Symfony Grunt Sass Edition
 =====================
 
+## Deprecated
+
+This package is no longer maintained. Please check out [glynn-admin-symfony4](https://github.com/disjfa/glynn-admin-symfony4)
+
 This is a Symfony Edition that uses a grunt configuration for styles and javascripts.  I built 
 a way where i can create and edit my styles and javascripts and symfony does not need to worry about a 
 configuration. You can build check and create a complete javascript file using es6. Watch your files
